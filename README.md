@@ -1,0 +1,3 @@
+# FitFood API
+
+FitFood API is a headless, scalable RESTful backend built with TypeScript and Fastify, designed to be frictionlessly consumed by any web or mobile client. The architecture strictly follows a Layered Design Pattern integrated with the Repository Pattern, decoupling core business logic from database operations and external frameworks to guarantee high testability, maintainability, and clean separation of concerns.
