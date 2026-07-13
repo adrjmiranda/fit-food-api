@@ -1,0 +1,13 @@
+services:
+  database:
+    image: postgres:18.3-alpine
+    container_name: fit-food-db
+    restart: always
+    environment:
+      POSTGRES_USER: adriano
+      POSTGRES_PASSWORD: secure_db_password
+      POSTGRES_DB: fit_food
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./.postgres_data:/var/lib/postgresql

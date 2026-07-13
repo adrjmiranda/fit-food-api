@@ -1,0 +1,10 @@
+services:
+  database_test:
+    image: postgres:18.3-alpine
+    container_name: fit-food-db-test
+    environment:
+      POSTGRES_USER: adriano
+      POSTGRES_PASSWORD: secure_db_password
+      POSTGRES_DB: fit_food_test
+    ports:
+      - '5433:5432'

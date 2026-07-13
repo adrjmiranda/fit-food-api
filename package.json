@@ -1,0 +1,94 @@
+{
+  "name": "fit-food-api",
+  "version": "1.0.0",
+  "description": "FitFood API is a headless, scalable RESTful backend built with TypeScript and Fastify, designed to be frictionlessly consumed by any web or mobile client. The architecture strictly follows a Layered Design Pattern integrated with the Repository Pattern, decoupling core business logic from database operations and external frameworks to guarantee high testability, maintainability, and clean separation of concerns.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/infra/http/server.ts",
+    "build": "tsc",
+    "start": "node dist/infra/http/server.js",
+    "prepare": "husky",
+    "eslint:check": "eslint src",
+    "prettier:check": "prettier --check \"src/**/*.ts\"",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "compose:test:up": "docker compose -f docker-compose.test.yml up -d",
+    "compose:test:down": "docker compose -f docker-compose.test.yml down",
+    "db:test:generate": "dotenv-cli -e .env.test -- drizzle-kit generate",
+    "db:test:push": "dotenv-cli -e .env.test -- drizzle-kit push",
+    "db:test:migrate": "dotenv-cli -e .env.test -- drizzle-kit migrate",
+    "db:test:studio": "dotenv-cli -e .env.test -- drizzle-kit studio",
+    "test": "dotenv-cli -e .env.test -- node --import tsx --test --test-concurrency=1 'src/**/*.test.ts' 'src/**/*.spec.ts'",
+    "test:watch": "nodemon --watch src -e ts --exec \"npm run test\"",
+    "test:coverage:spec": "dotenv-cli -e .env.test -- node --import tsx --test --test-concurrency=1 --experimental-test-coverage ./src/**/*.spec.ts",
+    "test:coverage:test": "dotenv-cli -e .env.test -- node --import tsx --test --test-concurrency=1 --experimental-test-coverage ./src/**/*.test.ts",
+    "test:init": "npm run compose:test:up && npm run db:test:push && npm run test"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrjmiranda/fit-food-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "imports": {
+    "#/*": {
+      "types": "./src/*",
+      "default": "./dist/*"
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/adrjmiranda/fit-food-api/issues"
+  },
+  "homepage": "https://github.com/adrjmiranda/fit-food-api#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
+    "@eslint/js": "^10.0.1",
+    "@faker-js/faker": "^10.4.0",
+    "@types/bcrypt": "^6.0.0",
+    "@types/eslint": "^9.6.1",
+    "@types/eslint-config-prettier": "^6.11.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^25.9.1",
+    "@types/pg": "^8.20.0",
+    "dotenv-cli": "^11.0.0",
+    "drizzle-kit": "^0.31.10",
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
+    "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "jiti": "^2.7.0",
+    "lint-staged": "^17.0.5",
+    "nodemon": "^3.1.14",
+    "prettier": "^3.8.3",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.4"
+  },
+  "dependencies": {
+    "@fastify/jwt": "^10.1.0",
+    "@fastify/swagger": "^9.7.0",
+    "@fastify/swagger-ui": "^5.2.6",
+    "bcrypt": "^6.0.0",
+    "drizzle-orm": "^0.45.2",
+    "fastify": "^5.8.5",
+    "fastify-type-provider-zod": "^6.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.21.0",
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.10.0",
+    "zod": "^4.4.3"
+  }
+}
