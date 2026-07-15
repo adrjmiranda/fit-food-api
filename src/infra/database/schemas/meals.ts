@@ -8,17 +8,13 @@ import {
   varchar,
 } from 'drizzle-orm/pg-core';
 
+import { UNIT_TYPES } from '#/domain/constants/unit-types.js';
 import { restaurantsTable } from '#/infra/database/schemas/restaurants.js';
 
 const MEAL_STATUS = {
   FREE: 0,
   CONTAINS: 1,
   MAY_CONTAIN: 2,
-} as const;
-
-export const UNIT_TYPES = {
-  GRAMS: 1,
-  MILLILITERS: 2,
 } as const;
 
 export const mealsTable = pgTable('meals', {

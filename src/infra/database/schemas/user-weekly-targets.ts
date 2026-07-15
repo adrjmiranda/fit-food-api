@@ -1,16 +1,7 @@
 import { jsonb, pgTable, timestamp, uuid } from 'drizzle-orm/pg-core';
 
+import type { WeeklyTargetsSchema } from '#/domain/types/targets.js';
 import { usersTable } from '#/infra/database/schemas/users.js';
-
-export interface DailyTargetSchema {
-  kcalTarget?: number;
-  proteinTarget?: number;
-  carbsTarget?: number;
-  fatTarget?: number;
-  isCheatDay?: boolean;
-}
-
-export type WeeklyTargetsSchema = Record<string, DailyTargetSchema>;
 
 export const userWeeklyTargetsTable = pgTable('user_weekly_targets', {
   id: uuid('id').primaryKey().defaultRandom(),

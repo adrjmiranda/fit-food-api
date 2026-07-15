@@ -6,16 +6,9 @@ import {
   uuid,
 } from 'drizzle-orm/pg-core';
 
+import { ORDER_STATUS } from '#/domain/constants/order-status.js';
 import { restaurantsTable } from '#/infra/database/schemas/restaurants.js';
 import { usersTable } from '#/infra/database/schemas/users.js';
-
-export const ORDER_STATUS = {
-  PENDING: 1,
-  PREPARING: 2,
-  OUT_FOR_DELIVERY: 3,
-  DELIVERED: 4,
-  CANCELED: 5,
-} as const;
 
 export const ordersTable = pgTable('orders', {
   id: uuid('id').primaryKey().defaultRandom(),

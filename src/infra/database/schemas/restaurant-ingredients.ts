@@ -7,18 +7,9 @@ import {
   varchar,
 } from 'drizzle-orm/pg-core';
 
+import { CONTAMINATION_STATUS } from '#/domain/constants/contamination-status.js';
+import { UNIT_TYPES } from '#/domain/constants/unit-types.js';
 import { restaurantsTable } from '#/infra/database/schemas/restaurants.js';
-
-export const INGREDIENT_STATUS = {
-  FREE: 0,
-  CONTAINS: 1,
-  MAY_CONTAIN: 2,
-} as const;
-
-export const UNIT_TYPES = {
-  GRAMS: 1,
-  MILLILITERS: 2,
-} as const;
 
 export const restaurantIngredientsTable = pgTable('restaurant_ingredients', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -34,13 +25,13 @@ export const restaurantIngredientsTable = pgTable('restaurant_ingredients', {
   fat: integer('fat').notNull(),
   sugarStatus: smallint('sugar_status')
     .notNull()
-    .default(INGREDIENT_STATUS.FREE),
+    .default(CONTAMINATION_STATUS.FREE),
   glutenStatus: smallint('gluten_status')
     .notNull()
-    .default(INGREDIENT_STATUS.FREE),
+    .default(CONTAMINATION_STATUS.FREE),
   lactoseStatus: smallint('lactose_status')
     .notNull()
-    .default(INGREDIENT_STATUS.FREE),
+    .default(CONTAMINATION_STATUS.FREE),
   unitType: smallint('unit_type').default(UNIT_TYPES.GRAMS).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true })
     .notNull()

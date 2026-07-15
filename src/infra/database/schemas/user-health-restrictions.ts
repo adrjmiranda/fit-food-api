@@ -1,12 +1,7 @@
 import { pgTable, smallint, timestamp, uuid } from 'drizzle-orm/pg-core';
 
+import { HEALTH_RESTRICTION_STATES } from '#/domain/constants/health-states.js';
 import { usersTable } from '#/infra/database/schemas/users.js';
-
-export const HEALTH_RESTRICTION_STATES = {
-  NO: 0,
-  YES: 1,
-  UNKNOWN: 2,
-};
 
 export const userHealthRestrictionsTable = pgTable('user_health_restrictions', {
   id: uuid('id').primaryKey().defaultRandom(),
