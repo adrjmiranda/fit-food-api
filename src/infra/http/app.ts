@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import '#/core/container/index.js';
 
 import fastifyJwt from '@fastify/jwt';
 import fastifySwagger from '@fastify/swagger';

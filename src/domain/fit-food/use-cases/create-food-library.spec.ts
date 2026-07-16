@@ -1,11 +1,14 @@
+import 'reflect-metadata';
+
 import assert from 'node:assert';
 import { beforeEach, describe, it } from 'node:test';
 
 import { CreateFoodLibraryUseCase } from '#/domain/fit-food/use-cases/create-food-library.js';
+import { makeFoodLibrary } from '#/test/factories/make-food-library.js';
 import { InMemoryFoodLibraryRepository } from '#/test/repositories/in-memory-food-library-repository.js';
 
 let foodLibraryRepository: InMemoryFoodLibraryRepository;
-let sut: CreateFoodLibraryUseCase; // SUT = System Under Test (Convenção de testes)
+let sut: CreateFoodLibraryUseCase; // SUT = System Under Test
 
 describe('Create Food Library Use Case', () => {
   beforeEach(() => {
@@ -14,15 +17,17 @@ describe('Create Food Library Use Case', () => {
   });
 
   it('should be able to create a food library item', async () => {
+    const foodLibraryItem = makeFoodLibrary({ name: 'Oatmeal' });
+
     const { food } = await sut.execute({
-      name: 'Oatmeal',
-      kcal: 389,
-      protein: 16.9,
-      carbs: 66.3,
-      fat: 6.9,
-      sugarStatus: 0,
-      glutenStatus: 1,
-      lactoseStatus: 0,
+      name: foodLibraryItem.name,
+      kcal: foodLibraryItem.kcal,
+      protein: foodLibraryItem.protein,
+      carbs: foodLibraryItem.carbs,
+      fat: foodLibraryItem.fat,
+      sugarStatus: foodLibraryItem.sugarStatus,
+      glutenStatus: foodLibraryItem.glutenStatus,
+      lactoseStatus: foodLibraryItem.lactoseStatus,
     });
 
     assert.ok(food.id);
@@ -32,27 +37,20 @@ describe('Create Food Library Use Case', () => {
   });
 
   it('should not be able to create a food library item with a duplicate name', async () => {
-    await sut.execute({
-      name: 'Oatmeal',
-      kcal: 389,
-      protein: 16.9,
-      carbs: 66.3,
-      fat: 6.9,
-      sugarStatus: 0,
-      glutenStatus: 1,
-      lactoseStatus: 0,
-    });
+    const existingFood = makeFoodLibrary({ name: 'Oatmeal' });
+
+    await foodLibraryRepository.create(existingFood);
 
     await assert.rejects(() =>
       sut.execute({
-        name: 'oatmeal',
-        kcal: 389,
-        protein: 16.9,
-        carbs: 66.3,
-        fat: 6.9,
-        sugarStatus: 0,
-        glutenStatus: 1,
-        lactoseStatus: 0,
+        name: existingFood.name,
+        kcal: existingFood.kcal,
+        protein: existingFood.protein,
+        carbs: existingFood.carbs,
+        fat: existingFood.fat,
+        sugarStatus: existingFood.sugarStatus,
+        glutenStatus: existingFood.glutenStatus,
+        lactoseStatus: existingFood.lactoseStatus,
       })
     );
   });

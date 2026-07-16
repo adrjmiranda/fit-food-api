@@ -1,3 +1,5 @@
+import { inject, injectable } from 'tsyringe';
+
 import type { IngredientStatus } from '#/domain/constants/contamination-status.js';
 import { FoodLibrary } from '#/domain/fit-food/entities/food-library.js';
 import type { FoodLibraryRepository } from '#/domain/fit-food/repositories/food-library-repository.js';
@@ -17,8 +19,12 @@ interface CreateFoodLibraryUseCaseResponse {
   food: FoodLibrary;
 }
 
+@injectable()
 export class CreateFoodLibraryUseCase {
-  constructor(private foodLibraryRepository: FoodLibraryRepository) {}
+  constructor(
+    @inject('FoodLibraryRepository')
+    private foodLibraryRepository: FoodLibraryRepository
+  ) {}
 
   async execute({
     name,
