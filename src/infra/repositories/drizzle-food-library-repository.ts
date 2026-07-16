@@ -59,7 +59,7 @@ export class DrizzleFoodLibraryRepository implements FoodLibraryRepository {
     return DrizzleFoodLibraryMapper.toDomain(row);
   }
 
-  async findByName(name: string): Promise<FoodLibrary[]> {
+  async findManyByName(name: string): Promise<FoodLibrary[]> {
     const rows = await db
       .select()
       .from(foodLibraryTable)

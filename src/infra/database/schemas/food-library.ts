@@ -12,7 +12,7 @@ import { UNIT_TYPES } from '#/domain/constants/unit-types.js';
 
 export const foodLibraryTable = pgTable('food_library', {
   id: uuid('id').primaryKey().defaultRandom(),
-  name: varchar('name', { length: 255 }).notNull(),
+  name: varchar('name', { length: 255 }).unique().notNull(),
   kcal: integer('kcal').notNull(),
   protein: integer('protein').notNull(),
   carbs: integer('carbs').notNull(),
