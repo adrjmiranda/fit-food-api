@@ -1,6 +1,6 @@
 import {
-  integer,
   pgTable,
+  real,
   smallint,
   timestamp,
   uuid,
@@ -13,10 +13,10 @@ import { UNIT_TYPES } from '#/domain/constants/unit-types.js';
 export const foodLibraryTable = pgTable('food_library', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: varchar('name', { length: 255 }).unique().notNull(),
-  kcal: integer('kcal').notNull(),
-  protein: integer('protein').notNull(),
-  carbs: integer('carbs').notNull(),
-  fat: integer('fat').notNull(),
+  kcal: real('kcal').notNull(),
+  protein: real('protein').notNull(),
+  carbs: real('carbs').notNull(),
+  fat: real('fat').notNull(),
   sugarStatus: smallint('sugar_status')
     .notNull()
     .default(CONTAMINATION_STATUS.FREE),

@@ -3,12 +3,12 @@ import 'reflect-metadata';
 import assert from 'node:assert';
 import { beforeEach, describe, it } from 'node:test';
 
-import { CreateFoodLibraryUseCase } from '#/domain/fit-food/use-cases/create-food-library.js';
+import { CreateFoodLibraryUseCase } from '#/domain/fit-food/use-cases/food-library/create-food-library.js';
 import { makeFoodLibrary } from '#/test/factories/make-food-library.js';
 import { InMemoryFoodLibraryRepository } from '#/test/repositories/in-memory-food-library-repository.js';
 
 let foodLibraryRepository: InMemoryFoodLibraryRepository;
-let sut: CreateFoodLibraryUseCase; // SUT = System Under Test
+let sut: CreateFoodLibraryUseCase;
 
 describe('Create Food Library Use Case', () => {
   beforeEach(() => {
