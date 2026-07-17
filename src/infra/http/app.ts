@@ -13,11 +13,14 @@ import {
 } from 'fastify-type-provider-zod';
 
 import { env } from '#/core/config/env.js';
+import { GlobalErrorHandler } from '#/infra/http/errors/global-error-handler.js';
 import { appRoutes } from '#/infra/http/routes.js';
 
 const app = fastify({
   logger: true,
 }).withTypeProvider<ZodTypeProvider>();
+
+app.setErrorHandler(GlobalErrorHandler.handle);
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);

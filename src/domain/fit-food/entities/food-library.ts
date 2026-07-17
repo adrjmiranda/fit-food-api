@@ -140,7 +140,7 @@ export class FoodLibrary {
     if (fat < 0) throw new Error('Fats cannot be negative');
   }
 
-  update(props: UpdateFoodLibraryProps): void {
+  public update(props: UpdateFoodLibraryProps): void {
     const targetKcal = props.kcal ?? this.props.kcal;
     const targetProtein = props.protein ?? this.props.protein;
     const targetCarbs = props.carbs ?? this.props.carbs;
