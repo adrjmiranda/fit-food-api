@@ -1,5 +1,6 @@
 import * as z from 'zod';
 
+import { ERROR_CODES } from '#/core/errors/codes/error-codes.js';
 import {
   CONTAMINATION_STATUS,
   type IngredientStatus,
@@ -14,5 +15,6 @@ export const contaminationStatusSchema = z.union(
     z.ZodLiteral<IngredientStatus>,
     z.ZodLiteral<IngredientStatus>,
     ...z.ZodLiteral<IngredientStatus>[],
-  ]
+  ],
+  ERROR_CODES.INVALID_CONTAMINATION_STATUS
 );

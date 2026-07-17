@@ -1,6 +1,3 @@
-// src/infra/http/errors/codes/modules/system-errors.ts
-// All code suggestions must be strictly in English
-
 export const SYSTEM_ERRORS = {
   VALIDATION_ERROR: 'system_validation_error',
   TOO_MANY_REQUESTS: 'system_too_many_requests',
@@ -8,4 +5,8 @@ export const SYSTEM_ERRORS = {
   RESOURCE_NOT_FOUND: 'system_resource_not_found',
   UNAUTHORIZED: 'system_unauthorized',
   FORBIDDEN: 'system_forbidden',
+  INVALID_NAME: 'system_invalid_name',
+  NAME_VERY_SHORT: 'system_name_very_short',
+  NAME_VERY_LONG: 'system_name_very_long',
+  INVALID_CONTAMINATION_STATUS: 'system_invalid_contamination_status',
 } as const;

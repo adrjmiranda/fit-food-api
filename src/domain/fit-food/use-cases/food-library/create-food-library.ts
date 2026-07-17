@@ -1,5 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
+import { AppError } from '#/core/errors/app-error.js';
+import { ERROR_CODES } from '#/core/errors/codes/error-codes.js';
 import type { IngredientStatus } from '#/domain/constants/contamination-status.js';
 import { FoodLibrary } from '#/domain/fit-food/entities/food-library.js';
 import type { FoodLibraryRepository } from '#/domain/fit-food/repositories/food-library-repository.js';
@@ -43,7 +45,7 @@ export class CreateFoodLibraryUseCase {
     );
 
     if (hasDuplicate)
-      throw new Error('A food with this some already exists in the library');
+      throw new AppError(ERROR_CODES.FOOD_LIBRARY_NAME_ALREADY_EXISTS, 409);
 
     const food = new FoodLibrary({
       name,

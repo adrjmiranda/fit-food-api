@@ -6,7 +6,7 @@ import type {
 import { ZodError } from 'zod';
 
 import { AppError } from '#/core/errors/app-error.js';
-import { ERROR_CODES } from '#/infra/http/errors/codes/error-codes.js';
+import { ERROR_CODES } from '#/core/errors/codes/error-codes.js';
 
 interface FastifyErrorWithValidation extends Error {
   validation?: FastifySchemaValidationError[];
