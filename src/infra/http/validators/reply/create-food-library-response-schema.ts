@@ -1,9 +1,6 @@
 import * as z from 'zod';
 
-import {
-  CONTAMINATION_STATUS,
-  type IngredientStatus,
-} from '#/domain/constants/contamination-status.js';
+import { contaminationStatusSchema } from '#/infra/http/validators/shared/contamination-status-schema.js';
 
 export const createFoodLibraryResponseSchema = z.object({
   food: z.object({
@@ -13,24 +10,9 @@ export const createFoodLibraryResponseSchema = z.object({
     protein: z.number().nonnegative(),
     carbs: z.number().nonnegative(),
     fat: z.number().nonnegative(),
-    sugarStatus: z
-      .number()
-      .refine((value) =>
-        Object.values(CONTAMINATION_STATUS).includes(value as IngredientStatus)
-      )
-      .transform((value) => value as IngredientStatus),
-    glutenStatus: z
-      .number()
-      .refine((value) =>
-        Object.values(CONTAMINATION_STATUS).includes(value as IngredientStatus)
-      )
-      .transform((value) => value as IngredientStatus),
-    lactoseStatus: z
-      .number()
-      .refine((value) =>
-        Object.values(CONTAMINATION_STATUS).includes(value as IngredientStatus)
-      )
-      .transform((value) => value as IngredientStatus),
+    sugarStatus: contaminationStatusSchema,
+    glutenStatus: contaminationStatusSchema,
+    lactoseStatus: contaminationStatusSchema,
     createdAt: z.coerce.date(),
     updatedAt: z.coerce.date(),
   }),
