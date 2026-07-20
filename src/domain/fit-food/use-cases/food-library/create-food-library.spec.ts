@@ -10,14 +10,15 @@ import { InMemoryFoodLibraryRepository } from '#/test/repositories/in-memory-foo
 let foodLibraryRepository: InMemoryFoodLibraryRepository;
 let sut: CreateFoodLibraryUseCase;
 
-describe('Create Food Library Use Case', () => {
+describe('Create Food Library Use Case (Spec)', () => {
   beforeEach(() => {
     foodLibraryRepository = new InMemoryFoodLibraryRepository();
     sut = new CreateFoodLibraryUseCase(foodLibraryRepository);
   });
 
   it('should be able to create a food library item', async () => {
-    const foodLibraryItem = makeFoodLibrary({ name: 'Oatmeal' });
+    const foodLibraryItemName = 'Oatmeal';
+    const foodLibraryItem = makeFoodLibrary({ name: foodLibraryItemName });
 
     const { food } = await sut.execute({
       name: foodLibraryItem.name,
@@ -33,11 +34,15 @@ describe('Create Food Library Use Case', () => {
     assert.ok(food.id);
     assert.ok(typeof food.id === 'string');
     assert.strictEqual(foodLibraryRepository.items.length, 1);
-    assert.strictEqual(foodLibraryRepository.items[0]?.name, 'Oatmeal');
+    assert.strictEqual(
+      foodLibraryRepository.items[0]?.name,
+      foodLibraryItemName
+    );
   });
 
   it('should not be able to create a food library item with a duplicate name', async () => {
-    const existingFood = makeFoodLibrary({ name: 'Oatmeal' });
+    const foodLibraryItemName = 'Oatmeal';
+    const existingFood = makeFoodLibrary({ name: foodLibraryItemName });
 
     await foodLibraryRepository.create(existingFood);
 

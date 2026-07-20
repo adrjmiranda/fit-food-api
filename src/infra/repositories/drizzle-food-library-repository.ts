@@ -10,18 +10,21 @@ type DatabaseFoodRow = typeof foodLibraryTable.$inferSelect;
 
 class DrizzleFoodLibraryMapper {
   static toDomain(raw: DatabaseFoodRow): FoodLibrary {
-    return new FoodLibrary({
-      name: raw.name,
-      kcal: raw.kcal,
-      protein: raw.protein,
-      carbs: raw.carbs,
-      fat: raw.fat,
-      sugarStatus: raw.sugarStatus as IngredientStatus,
-      glutenStatus: raw.glutenStatus as IngredientStatus,
-      lactoseStatus: raw.lactoseStatus as IngredientStatus,
-      createdAt: raw.createdAt,
-      updatedAt: raw.updatedAt,
-    });
+    return new FoodLibrary(
+      {
+        name: raw.name,
+        kcal: raw.kcal,
+        protein: raw.protein,
+        carbs: raw.carbs,
+        fat: raw.fat,
+        sugarStatus: raw.sugarStatus as IngredientStatus,
+        glutenStatus: raw.glutenStatus as IngredientStatus,
+        lactoseStatus: raw.lactoseStatus as IngredientStatus,
+        createdAt: raw.createdAt,
+        updatedAt: raw.updatedAt,
+      },
+      raw.id
+    );
   }
 
   static toPersistence(domain: FoodLibrary) {
@@ -44,7 +47,7 @@ class DrizzleFoodLibraryMapper {
 export class DrizzleFoodLibraryRepository implements FoodLibraryRepository {
   async create(food: FoodLibrary): Promise<void> {
     const raw = DrizzleFoodLibraryMapper.toPersistence(food);
-    await db.insert(foodLibraryTable).values(raw);
+    await db.insert(foodLibraryTable).values(raw).execute();
   }
 
   async findById(id: string): Promise<FoodLibrary | null> {
@@ -52,7 +55,8 @@ export class DrizzleFoodLibraryRepository implements FoodLibraryRepository {
       .select()
       .from(foodLibraryTable)
       .where(eq(foodLibraryTable.id, id))
-      .limit(1);
+      .limit(1)
+      .execute();
 
     if (!row) return null;
 
@@ -64,7 +68,7 @@ export class DrizzleFoodLibraryRepository implements FoodLibraryRepository {
       .select()
       .from(foodLibraryTable)
       .where(eq(foodLibraryTable.name, name))
-      .limit(1);
+      .execute();
 
     return rows.map((row) => DrizzleFoodLibraryMapper.toDomain(row));
   }
@@ -75,6 +79,7 @@ export class DrizzleFoodLibraryRepository implements FoodLibraryRepository {
     await db
       .update(foodLibraryTable)
       .set(raw)
-      .where(eq(foodLibraryTable.id, food.id));
+      .where(eq(foodLibraryTable.id, food.id))
+      .execute();
   }
 }

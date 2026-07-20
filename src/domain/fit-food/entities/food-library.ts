@@ -11,8 +11,8 @@ export interface FoodLibraryProps {
   sugarStatus: IngredientStatus;
   glutenStatus: IngredientStatus;
   lactoseStatus: IngredientStatus;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export type UpdateFoodLibraryProps = Partial<
@@ -41,6 +41,8 @@ export class FoodLibrary {
   }
 
   set name(value: string) {
+    if (!value) throw new Error('The ingredient name must not be empty');
+
     this.props.name = value;
     this.touch();
   }
