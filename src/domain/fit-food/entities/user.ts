@@ -1,9 +1,12 @@
 import { randomUUID } from 'node:crypto';
 
+import { type UserRoles } from '#/domain/constants/user-roles.js';
+
 export interface UserProps {
   name: string;
   email: string;
   passwordHash: string;
+  role: UserRoles;
   streakDays: number;
   createdAt?: Date;
   updatedAt?: Date;
@@ -61,6 +64,15 @@ export class User {
     if (!value) throw new Error('User password hash must not be empty');
 
     this.props.passwordHash = value;
+    this.touch();
+  }
+
+  get role(): UserRoles {
+    return this.props.role;
+  }
+
+  set role(value: UserRoles) {
+    this.props.role = value;
     this.touch();
   }
 

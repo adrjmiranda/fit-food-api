@@ -3,6 +3,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '#/core/errors/app-error.js';
 import { ERROR_CODES } from '#/core/errors/codes/error-codes.js';
+import { USER_ROLES } from '#/domain/constants/user-roles.js';
 import { User } from '#/domain/fit-food/entities/user.js';
 import type { UserRepository } from '#/domain/fit-food/repositories/user-repository.js';
 
@@ -38,6 +39,7 @@ export class RegisterUserUseCase {
       name,
       email,
       passwordHash,
+      role: USER_ROLES.CUSTOMER,
       streakDays: 0,
       createdAt: new Date(),
       updatedAt: new Date(),
