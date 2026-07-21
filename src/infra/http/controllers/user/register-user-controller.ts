@@ -1,9 +1,9 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
+import { container } from 'tsyringe';
 
 import { RegisterUserUseCase } from '#/domain/fit-food/use-cases/user/register-user.js';
 import { UserPresenter } from '#/infra/http/presenters/user-presenter.js';
 import { registerUserBodySchema } from '#/infra/http/validators/user/request/body/register-user-body-schema.js';
-import { DrizzleUserRepository } from '#/infra/repositories/drizzle-user-repository.js';
 
 export class RegisterUserController {
   async handle(request: FastifyRequest, reply: FastifyReply): Promise<void> {
@@ -11,8 +11,7 @@ export class RegisterUserController {
       request.body
     );
 
-    const userRepository = new DrizzleUserRepository();
-    const registerUserUseCase = new RegisterUserUseCase(userRepository);
+    const registerUserUseCase = container.resolve(RegisterUserUseCase);
 
     const { user } = await registerUserUseCase.execute({
       name,

@@ -6,13 +6,13 @@ import { ERROR_CODES } from '#/core/errors/codes/error-codes.js';
 import { User } from '#/domain/fit-food/entities/user.js';
 import type { UserRepository } from '#/domain/fit-food/repositories/user-repository.js';
 
-interface RegisterUserRequest {
+interface RegisterUserUseCaseRequest {
   name: string;
   email: string;
   password: string;
 }
 
-interface RegisterUserResponse {
+interface RegisterUserUseCaseResponse {
   user: User;
 }
 
@@ -27,7 +27,7 @@ export class RegisterUserUseCase {
     name,
     email,
     password,
-  }: RegisterUserRequest): Promise<RegisterUserResponse> {
+  }: RegisterUserUseCaseRequest): Promise<RegisterUserUseCaseResponse> {
     const userExists = await this.userRepository.findByEmail(email);
 
     if (userExists) throw new AppError(ERROR_CODES.EMAIL_ALREADY_EXISTS, 409);

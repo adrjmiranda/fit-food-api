@@ -5,6 +5,7 @@ export const USERS_ERRORS = {
   INVALID_CREDENTIALS: 'user_invalid_credentials',
   PASSWORD_VERY_SHORT: 'user_password_very_short',
   PASSWORD_VERY_LONG: 'user_password_very_long',
+  INVALID_PASSWORD: 'invalid_password',
   HEALTH_RESTRICTIONS_ALREADY_EXISTS: 'user_health_restrictions_already_exists',
   WEEKLY_TARGETS_ALREADY_EXISTS: 'user_weekly_targets_already_exists',
   CONSUMPTION_NOT_FOUND: 'user_consumption_not_found',

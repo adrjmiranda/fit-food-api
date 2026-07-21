@@ -8,9 +8,11 @@ import { createFoodLibraryBodySchema } from '#/infra/http/validators/food-librar
 export class CreateFoodLibraryController {
   async handle(request: FastifyRequest, reply: FastifyReply): Promise<void> {
     const data = createFoodLibraryBodySchema.parse(request.body);
+
     const createFoodLibraryUseCase = container.resolve(
       CreateFoodLibraryUseCase
     );
+
     const { food } = await createFoodLibraryUseCase.execute(data);
 
     await reply.status(201).send({

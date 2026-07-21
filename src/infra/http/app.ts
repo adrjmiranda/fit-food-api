@@ -25,6 +25,13 @@ app.setErrorHandler(GlobalErrorHandler.handle);
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
+app.register(fastifyJwt, {
+  secret: env.ACCESS_JWT_SECRET,
+  sign: {
+    expiresIn: '15m',
+  },
+});
+
 app.register(fastifySwagger, {
   openapi: {
     info: {
@@ -41,19 +48,13 @@ app.register(fastifySwagger, {
         },
       },
     },
+    security: [{ bearerAuth: [] }],
   },
   transform: jsonSchemaTransform,
 });
 
 app.register(fastifySwaggerUi, {
   routePrefix: '/docs',
-});
-
-app.register(fastifyJwt, {
-  secret: env.ACCESS_JWT_SECRET,
-  sign: {
-    expiresIn: '15min',
-  },
 });
 
 app.register(appRoutes);
