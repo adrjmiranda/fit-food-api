@@ -39,14 +39,22 @@ export class AuthenticateUserUseCase {
     if (!passwordIsCorrect)
       throw new AppError(ERROR_CODES.INVALID_PASSWORD, 400);
 
-    const accessToken = jwt.sign({}, env.ACCESS_JWT_SECRET, {
-      subject: userExists.id,
-      expiresIn: '15m',
-    });
-    const refreshToken = jwt.sign({}, env.REFRESH_JWT_SECRET, {
-      subject: userExists.id,
-      expiresIn: '30d',
-    });
+    const accessToken = jwt.sign(
+      { role: userExists.role },
+      env.ACCESS_JWT_SECRET,
+      {
+        subject: userExists.id,
+        expiresIn: '15m',
+      }
+    );
+    const refreshToken = jwt.sign(
+      { role: userExists.role },
+      env.REFRESH_JWT_SECRET,
+      {
+        subject: userExists.id,
+        expiresIn: '30d',
+      }
+    );
 
     return {
       user: userExists,
