@@ -55,6 +55,9 @@ app.register(fastifySwagger, {
 
 app.register(fastifySwaggerUi, {
   routePrefix: '/docs',
+  uiConfig: {
+    persistAuthorization: true,
+  },
 });
 
 app.register(appRoutes);
