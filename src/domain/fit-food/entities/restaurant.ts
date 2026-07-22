@@ -85,6 +85,14 @@ export class Restaurant {
     this.props.isOpen = value;
   }
 
+  get createdAt(): Date {
+    return this.props.createdAt ?? new Date();
+  }
+
+  get updatedAt(): Date {
+    return this.props.updatedAt ?? new Date();
+  }
+
   private touch(): void {
     this.props.updatedAt = new Date();
   }

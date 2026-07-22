@@ -1,5 +1,6 @@
 import { eq } from 'drizzle-orm';
 
+import type { UserRoles } from '#/domain/constants/user-roles.js';
 import { User } from '#/domain/fit-food/entities/user.js';
 import type { UserRepository } from '#/domain/fit-food/repositories/user-repository.js';
 import { db } from '#/infra/database/client/db.js';
@@ -14,6 +15,7 @@ class DrizzleUserMapper {
         name: raw.name,
         email: raw.email,
         passwordHash: raw.passwordHash,
+        role: raw.role as UserRoles,
         streakDays: raw.streakDays,
         createdAt: raw.createdAt,
         updatedAt: raw.updatedAt,
@@ -28,6 +30,7 @@ class DrizzleUserMapper {
       name: domain.name,
       email: domain.email,
       passwordHash: domain.passwordHash,
+      role: domain.role,
       streakDays: domain.streakDays,
       createdAt: domain.createdAt,
       updatedAt: domain.updatedAt,

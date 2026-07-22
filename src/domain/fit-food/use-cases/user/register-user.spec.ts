@@ -9,7 +9,7 @@ import { compareSync, hashSync } from 'bcrypt';
 import { AppError } from '#/core/errors/app-error.js';
 import { ERROR_CODES } from '#/core/errors/codes/error-codes.js';
 import { RegisterUserUseCase } from '#/domain/fit-food/use-cases/user/register-user.js';
-import { makeUser } from '#/test/factories/make-user-library.js';
+import { makeUser } from '#/test/factories/make-user.js';
 import { InMemoryUserRepository } from '#/test/repositories/in-memory-user-repository.js';
 
 let userRepository: InMemoryUserRepository;
