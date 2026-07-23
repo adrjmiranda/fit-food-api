@@ -9,10 +9,18 @@ export class AuthenticateUserController {
   async handle(request: FastifyRequest, reply: FastifyReply): Promise<void> {
     const { email, password } = authenticateUserBodySchema.parse(request.body);
 
+    const userAgent = request.headers['user-agent'];
+    const ipAddress = request.ip;
+
     const authenticateUserUseCase = container.resolve(AuthenticateUserUseCase);
 
     const { user, accessToken, refreshToken } =
-      await authenticateUserUseCase.execute({ email, password });
+      await authenticateUserUseCase.execute({
+        email,
+        password,
+        userAgent: userAgent ?? null,
+        ipAddress,
+      });
 
     reply.status(200).send({
       user: UserPresenter.toHTTP(user),

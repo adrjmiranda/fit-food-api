@@ -29,6 +29,13 @@
       "when": 1784637661268,
       "tag": "0003_brown_jigsaw",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1784817805070,
+      "tag": "0004_flowery_mauler",
+      "breakpoints": true
     }
   ]
 }

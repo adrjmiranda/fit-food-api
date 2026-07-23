@@ -5,12 +5,16 @@ import { inject, injectable } from 'tsyringe';
 import { env } from '#/core/config/env.js';
 import { AppError } from '#/core/errors/app-error.js';
 import { ERROR_CODES } from '#/core/errors/codes/error-codes.js';
+import { RefreshToken } from '#/domain/fit-food/entities/refresh-token.js';
 import type { User } from '#/domain/fit-food/entities/user.js';
+import type { RefreshTokenRepository } from '#/domain/fit-food/repositories/refresh-token-repository.js';
 import type { UserRepository } from '#/domain/fit-food/repositories/user-repository.js';
 
 interface AuthenticateUserUseCaseRequest {
   email: string;
   password: string;
+  userAgent?: string | null;
+  ipAddress?: string | null;
 }
 
 interface AuthenticateUserUseCaseResponse {
@@ -23,12 +27,16 @@ interface AuthenticateUserUseCaseResponse {
 export class AuthenticateUserUseCase {
   constructor(
     @inject('UserRepository')
-    private userRepository: UserRepository
+    private userRepository: UserRepository,
+    @inject('RefreshTokenRepository')
+    private refreshTokenRepository: RefreshTokenRepository
   ) {}
 
   async execute({
     email,
     password,
+    userAgent,
+    ipAddress,
   }: AuthenticateUserUseCaseRequest): Promise<AuthenticateUserUseCaseResponse> {
     const userExists = await this.userRepository.findByEmail(email);
 
@@ -47,13 +55,25 @@ export class AuthenticateUserUseCase {
         expiresIn: '15m',
       }
     );
+
+    const expiresInDays = 30;
     const refreshToken = jwt.sign(
       { role: userExists.role },
       env.REFRESH_JWT_SECRET,
       {
         subject: userExists.id,
-        expiresIn: '30d',
+        expiresIn: `${expiresInDays}d`,
       }
+    );
+
+    await this.refreshTokenRepository.create(
+      new RefreshToken({
+        token: refreshToken,
+        userId: userExists.id,
+        expiresInDays,
+        userAgent: userAgent ?? null,
+        ipAddress: ipAddress ?? null,
+      })
     );
 
     return {
